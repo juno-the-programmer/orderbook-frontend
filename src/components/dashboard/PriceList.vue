@@ -8,109 +8,77 @@
   console.log(data);
   const snapshot = ref();
 
-  const list = computed(() => {
-    const formattedData = JSON.parse(data.value);
-    const bids = formattedData.data.bids;
-    const asks = formattedData.data.asks;
-    const type = formattedData.data.type;
-    console.log(type);
-    if (type === 'snapshot') {
-      snapshot.value = bids;
-    }
-    return {
-      bids,
-      asks,
-      type,
-    };
-  });
+  // const list = computed(() => {
+  //   const formattedData = JSON.parse(data.value);
+  //   const bids = formattedData.data.bids;
+  //   const asks = formattedData.data.asks;
+  //   const type = formattedData.data.type;
+  //   console.log(type);
+  //   if (type === 'snapshot') {
+  //     snapshot.value = bids;
+  //   }
+  //   return {
+  //     bids,
+  //     asks,
+  //     type,
+  //   };
+  // });
 </script>
 
 <template>
-  <div class="wrapper">
-    <div class="box header">{{ status }}</div>
+  <div class="table">
+    <div class="heading">Title 1</div>
+    <div class="heading">Title 2</div>
+    <div class="heading">Title 3</div>
 
-    <div class="box table-head price-table-head">Price (USD)</div>
-    <div class="box table-head size-table-head">Size</div>
-    <div class="box table-head total-table-head">Total</div>
+    <div class="rowWrapper" v-for="row in 8" :key="row">
+      <div class="row"><span>s {{ row }}</span></div>
+      <div class="row"><span>s {{ row }}</span></div>
+      <div class="row"><span>s {{ row }}</span></div>
+    </div>
 
-    <div class="box price-content buy-quote">buy</div>
-    <div class="box size-content">size</div>
-    <div class="box total-content">total</div>
+    <div class="rowWrapper" v-for="row in 8" :key="row">
+      <div class="row"><span>b {{ row }}</span></div>
+      <div class="row"><span>b {{ row }}</span></div>
+      <div class="row"><span>b {{ row }}</span></div>
+    </div>
 
-    <div class="box accumulate-content">1234455</div>
   </div>
 </template>
 
 <style scoped>
-  .header {
-    color: white;
-  }
-
-  .table-head {
-    color: #8698aa;
-  }
-
-  .buy-quote {
-    color: #00b15d;
-  }
-
-  .sell-quote {
-    color: #ff5b5a;
-  }
-
-  .price-table-head {
-    grid-area: price-table-head;
-  }
-
-  .size-table-head {
-    grid-area: size-table-head;
-  }
-
-  .total-table-head {
-    grid-area: total-table-head;
-  }
-
-  .price-content {
-    grid-area: price-content;
-  }
-
-  .size-content {
-    grid-area: size-content;
-  }
-
-  .total-content {
-    grid-area: total-content;
-  }
-
-  .accumulate-content {
-    grid-area: accumulate-content;
-    color: #00b15d;
-  }
-
-  .header {
-    grid-area: header;
-  }
-
-  .wrapper {
+  .table {
     display: grid;
-    grid-gap: 10px;
-    grid-template-columns: 120px 120px 120px;
-    grid-template-areas:
-      'header header header'
-      'price-table-head size-table-head total-table-head'
-      'price-content size-content total-content'
-      'accumulate-content accumulate-content accumulate-content';
-    background-color: #131b29;
-    color: #f0f4f8;
-    text-align: left;
-    padding: 10px;
+    grid-template-columns: [col-start] auto [col-end];
+    grid-template-rows: [header-start] 50px [header-end row-start] auto [row-end];
+    grid-auto-rows: auto;
+    grid-auto-columns: auto;
+    overflow: hidden;
+    background: #131B29;
+    color: #F0F4F8;
   }
 
-  /* .box {
-    background-color: #444;
-    color: #fff;
-    border-radius: 5px;
-    padding: 20px;
-    font-size: 150%;
-  } */
+  .table .row,
+  .table .heading {
+    padding: 10px;
+    position: relative;
+  }
+
+  .heading {
+    color: #8698aa;
+    grid-row: header;
+  }
+
+  .row span {
+    position: relative;
+    z-index: 2;
+  }
+
+  .rowWrapper {
+    display: contents;
+  }
+
+  .rowWrapper:hover > div {
+    background-color: #1E3059;
+  }
 </style>
