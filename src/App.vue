@@ -1,12 +1,11 @@
 <script setup lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import HelloWorld from './components/HelloWorld.vue'
-import PriceList from './components/dashboard/PriceList.vue'
+import OrderList from './components/dashboard/OrderList.vue';
 </script>
 
 <template>
-  <PriceList />
+  <OrderList />
 </template>
 
 <style>
@@ -16,6 +15,6 @@ import PriceList from './components/dashboard/PriceList.vue'
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 10px;
 }
 </style>
