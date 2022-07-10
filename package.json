@@ -5,10 +5,12 @@
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "lint:script": "eslint --ext .ts,vue --ignore-path .gitignore \"src/**/*.{vue,ts,tsx}\"",
-    "start": "vite preview"
+    "start": "node server.js"
   },
   "dependencies": {
     "@vueuse/core": "^8.9.0",
+    "express": "^4.18.1",
+    "serve-static": "^1.15.0",
     "vue": "^3.2.13",
     "vuex": "^4.0.2"
   },
