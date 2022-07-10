@@ -33,19 +33,11 @@
         <span class="size">Total</span>
       </div>
 
-      <div
-        v-for="row in getAskList"
-        :key="row"
-        class="rowWrapper"
-        :class="{ newAskRowAnimation: row.type === 'new' }"
-      >
+      <div v-for="row in getAskList" :key="row" class="rowWrapper" :class="{ newAskRowAnimation: row.type === 'new' }">
         <div class="row ask">
           <span>{{ row.quote }}</span>
         </div>
-        <div
-          class="row"
-          :class="{ increase: row.sizeDiff === 'increase', decrease: row.sizeDiff === 'decrease' }"
-        >
+        <div class="row" :class="{ increase: row.sizeDiff === 'increase', decrease: row.sizeDiff === 'decrease' }">
           <span class="size">{{ row.size }}</span>
         </div>
         <div class="row">
@@ -68,19 +60,11 @@
         </div>
       </div>
 
-      <div
-        v-for="row in getBidList"
-        :key="row"
-        class="rowWrapper"
-        :class="{ newBidRowAnimation: row.type === 'new' }"
-      >
+      <div v-for="row in getBidList" :key="row" class="rowWrapper" :class="{ newBidRowAnimation: row.type === 'new' }">
         <div class="row bid">
           <span>{{ row.quote }}</span>
         </div>
-        <div
-          class="row"
-          :class="{ increase: row.sizeDiff === 'increase', decrease: row.sizeDiff === 'decrease' }"
-        >
+        <div class="row" :class="{ increase: row.sizeDiff === 'increase', decrease: row.sizeDiff === 'decrease' }">
           <span class="size">{{ row.size }}</span>
         </div>
         <div class="row">

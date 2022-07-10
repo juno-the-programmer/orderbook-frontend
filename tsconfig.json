@@ -15,7 +15,7 @@
       "@/*": ["./src/*"]
     },
     "skipLibCheck": true,
-    "types": ["vite/client", "jest", "@types/jest"]
+    "types": ["vite/client"]
   },
   "include": ["src/**/*.js", "src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]
 }

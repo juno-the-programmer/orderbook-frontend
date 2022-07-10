@@ -12,6 +12,8 @@ module.exports = {
   plugins: ['vue', '@typescript-eslint'],
   rules: {
     indent: ['off', 2],
+    'max-len': 0,
+    'no-param-reassign': 'off',
     'linebreak-style': 0,
     'implicit-arrow-linebreak': 'off',
     'operator-linebreak': 'off',
@@ -26,16 +28,6 @@ module.exports = {
     'vue/no-v-html': 'off',
     'no-confusing-arrow': 'off',
     'vue/max-attributes-per-line': 'off',
-    'vue/max-len': [
-      'error',
-      {
-        code: 120,
-        template: 9000,
-        ignoreTemplateLiterals: true,
-        ignoreUrls: true,
-        ignoreStrings: true,
-      },
-    ],
   },
   settings: {
     'import/resolver': {

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { generateOrders, mutateOrders, accumulateLastQuotes } from '@/composables/orderGenerator';
 import { OrderModel } from '@/models/OrderModel';
 import formatThousandSeparator from '@/utils/formatter';
@@ -5,14 +6,14 @@ import formatThousandSeparator from '@/utils/formatter';
 interface stateInt {
   displayBidQuotes: OrderModel[];
   displayAskQuotes: OrderModel[];
-  webSocket: WebSocket;
+  webSocket: WebSocket | null;
   seqNum: number;
 }
 
 const state: stateInt = {
   displayBidQuotes: [],
   displayAskQuotes: [],
-  webSocket: new WebSocket('wss://ws.btse.com/ws/oss/futures'),
+  webSocket: null,
   seqNum: 0,
 };
 
@@ -25,16 +26,15 @@ export default {
     initWebsocket(state: stateInt) {
       state.webSocket = new WebSocket('wss://ws.btse.com/ws/oss/futures');
 
-      state.webSocket.onopen = function () {
-        state.webSocket.send(JSON.stringify(SUBSCRIBE_MESSAGE));
+      state.webSocket.onopen = () => {
+        state.webSocket?.send(JSON.stringify(SUBSCRIBE_MESSAGE));
       };
 
-      state.webSocket.onmessage = function (e: any) {
+      state.webSocket.onmessage = (e: any) => {
         const data = JSON.parse(e.data);
 
         if (data.prevSeqNum !== state.seqNum && state.seqNum !== 0) {
-          console.log('you need to resubscribe');
-          state.webSocket.send(JSON.stringify(SUBSCRIBE_MESSAGE));
+          state.webSocket?.send(JSON.stringify(SUBSCRIBE_MESSAGE));
         }
         state.seqNum = data.seqNum;
 
@@ -48,38 +48,32 @@ export default {
             state.displayAskQuotes = mutateOrders(data.data.asks, state.displayAskQuotes);
             state.displayBidQuotes = mutateOrders(data.data.bids, state.displayBidQuotes);
             break;
-        }
-      };
 
-      state.webSocket.onerror = function () {
-        console.log('websocket error');
-      };
-      state.webSocket.close = function () {
-        console.log('websocked closed');
+          default:
+            break;
+        }
       };
     },
   },
   getters: {
-    asks: (state: stateInt) => {
-      return accumulateLastQuotes(state.displayAskQuotes, 8, 'desc').map((item: OrderModel) => {
+    asks: (state: stateInt) =>
+      accumulateLastQuotes(state.displayAskQuotes, 8, 'desc').map((item: OrderModel) => {
         return {
           ...item,
-          quote: formatThousandSeparator(parseInt(item.quote)),
+          quote: formatThousandSeparator(item.quote),
           size: formatThousandSeparator(item.size),
           total: formatThousandSeparator(item.total),
         };
-      });
-    },
-    bids: (state: stateInt) => {
-      return accumulateLastQuotes(state.displayBidQuotes, 8, 'asc').map((item: OrderModel) => {
+      }),
+    bids: (state: stateInt) =>
+      accumulateLastQuotes(state.displayBidQuotes, 8, 'asc').map((item: OrderModel) => {
         return {
           ...item,
-          quote: formatThousandSeparator(parseInt(item.quote)),
+          quote: formatThousandSeparator(item.quote),
           size: formatThousandSeparator(item.size),
           total: formatThousandSeparator(item.total),
         };
-      });
-    },
+      }),
   },
   actions: {},
   modules: {},
