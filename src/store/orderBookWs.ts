@@ -3,6 +3,9 @@ import { generateOrders, mutateOrders, accumulateLastQuotes } from '@/composable
 import { OrderModel } from '@/models/OrderModel';
 import formatThousandSeparator from '@/utils/formatter';
 
+const ORDERBOOK_WSS = `${import.meta.env.VITE_BASE_URL}${import.meta.env.VITE_ORDERBOOK_URL}`;
+const SUBSCRIBE_MESSAGE = { op: 'subscribe', args: ['update:BTCPFC'] };
+
 interface stateInt {
   displayBidQuotes: OrderModel[];
   displayAskQuotes: OrderModel[];
@@ -17,14 +20,12 @@ const state: stateInt = {
   seqNum: 0,
 };
 
-const SUBSCRIBE_MESSAGE = { op: 'subscribe', args: ['update:BTCPFC'] };
-
 export default {
   namespaced: true,
   state,
   mutations: {
     initWebsocket(state: stateInt) {
-      state.webSocket = new WebSocket('wss://ws.btse.com/ws/oss/futures');
+      state.webSocket = new WebSocket(ORDERBOOK_WSS);
 
       state.webSocket.onopen = () => {
         state.webSocket?.send(JSON.stringify(SUBSCRIBE_MESSAGE));

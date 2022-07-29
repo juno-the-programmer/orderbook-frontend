@@ -1,6 +1,8 @@
 /* eslint-disable */
 import formatThousandSeparator from '@/utils/formatter';
 
+const SUBSCRIBE_MESSAGE = { op: 'subscribe', args: ['tradeHistoryApi:BTCPFC'] };
+const LASTPRICE_WSS = `${import.meta.env.VITE_BASE_URL}${import.meta.env.VITE_LASTPRICE_URL}`;
 interface stateInt {
   data: Object;
   lastPrice: number;
@@ -15,14 +17,12 @@ const state: stateInt = {
   lastPriceWebSocket: null,
 };
 
-const SUBSCRIBE_MESSAGE = { op: 'subscribe', args: ['tradeHistoryApi:BTCPFC'] };
-
 export default {
   namespaced: true,
   state,
   mutations: {
     initWebsocket(state: stateInt) {
-      state.lastPriceWebSocket = new WebSocket('wss://ws.btse.com/ws/futures');
+      state.lastPriceWebSocket = new WebSocket(LASTPRICE_WSS);
 
       state.lastPriceWebSocket.onopen = () => {
         state.lastPriceWebSocket?.send(JSON.stringify(SUBSCRIBE_MESSAGE));
