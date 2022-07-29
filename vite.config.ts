@@ -2,6 +2,7 @@ import { defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import { resolve } from 'path';
 import { createHtmlPlugin } from 'vite-plugin-html';
+import gzipPlugin from 'rollup-plugin-gzip';
 
 // https://vitejs.dev/config/
 export default ({ mode }) => {
@@ -24,5 +25,20 @@ export default ({ mode }) => {
         },
       }),
     ],
+    build: {
+      rollupOptions: {
+        plugins: [gzipPlugin()],
+        output: {
+          manualChunks(id) {
+            const result = /[\\/]node_modules[\\/](.*?)([\\/]|$)/.exec(id);
+            if (result) {
+              const [, packageName] = result;
+              return `npm.${packageName.replace('@', '')}`;
+            }
+            return 'others';
+          },
+        },
+      },
+    },
   });
 };

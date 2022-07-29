@@ -1,9 +1,10 @@
+const compression = require('compression');
 const express = require('express');
 const serveStatic = require('serve-static');
 const path = require('path');
 
 const app = express();
-
+app.use(compression());
 //here we are configuring dist to serve app files
 app.use('/', serveStatic(path.join(__dirname, '/dist')));
 
