@@ -2,6 +2,7 @@
   "name": "orderbook-frontend",
   "version": "0.0.0",
   "scripts": {
+    "compile:ts": "vue-tsc --noEmit",
     "dev": "vite --mode development",
     "build-stage": "vue-tsc --noEmit && vite build --mode staging",
     "build": "vue-tsc --noEmit && vite build --mode production",
@@ -24,6 +25,7 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-vue": "^9.2.0",
+    "husky": "^8.0.1",
     "typescript": "^4.4.3",
     "vite": "^2.5.10",
     "vite-plugin-html": "^3.2.0",
