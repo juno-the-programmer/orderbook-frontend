@@ -11,8 +11,7 @@ interface ImportMetaEnv extends Readonly<Record<string, string>> {
   readonly VITE_APP_TITLE: string;
   readonly VITE_BASE_URL: string;
   readonly VITE_LASTPRICE_URL: string;
-  readonly VITE_ORDERBOOK_URL: string;
-  ss;
+  readonly VITE_ORDERBOOK_URL:;
 }
 
 interface ImportMeta {

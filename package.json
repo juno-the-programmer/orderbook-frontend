@@ -7,6 +7,8 @@
     "build-stage": "vue-tsc --noEmit && vite build --mode staging",
     "build": "vue-tsc --noEmit && vite build --mode production",
     "lint:script": "eslint --ext .ts,vue --ignore-path .gitignore \"src/**/*.{vue,ts,tsx}\"",
+    "postinstall": "husky install",
+    "prepush": "yarn lint:script && yarn compile:ts",
     "start": "node server.js"
   },
   "dependencies": {
